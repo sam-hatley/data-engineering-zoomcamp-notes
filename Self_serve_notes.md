@@ -35,6 +35,8 @@ ENTRYPOINT [ "python", "ingest_data.py" ]
 
 ## Ingesting NY Taxi Data to Postgres
 
+Selecting an internal file with the -v flag allows us to keep a local copy of the database.
+
 ```bash
 docker run -it \
     -e POSTGRES_USER="root" \
@@ -50,7 +52,7 @@ To see what's running on docker, run `docker ps`. To connect to the psql databas
 pgcli -h localhost -p 5432 -u root -d ny_taxi
 ```
 
-Used `wget` with [these datasets](https://github.com/DataTalksClub/nyc-tlc-data) to import the data, then used a [jupyter notebook](/2_DOCKER_SQL/upload-data.ipynb) to process and upload the data into the database.
+Used `wget` with [these datasets](https://github.com/DataTalksClub/nyc-tlc-data) to import the data, then used a [jupyter notebook](/2_DOCKER_SQL/upload-data.ipynb) to process and upload the data into the database. Will ultimately use the jupyter notebook to test the code, then copy it over to a script for ingestion.
 
 # Connecting pgAdmin and Postgres
 
@@ -64,14 +66,11 @@ docker run -it \
     dpage/pgadmin4
 ```
 
-We need to network the running psql docker instance to the pgAdmin instance.
+We need to place the psql instance and the pgAdmin instance on the same network for pgAdmin to access it.
 
 Create a network:
 ```
 docker network create pg-network
-```
-```
-51facbaf77b621622631bd722b547142f2c28c0db42c63d2bdf756c84014ddbd
 ```
 
 Now run our instances within that network:
@@ -155,3 +154,14 @@ python3 -m http.server
 so we can gzip the file then link to `http://172.24.57.193:8000/output.csv.gz`, or whatever ip debian throws with the command `ip addr`.
 
 Stopped on [1.2.5](https://www.youtube.com/watch?v=hKI6PkPhpa0&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=10)
+
+## Running psql and pgAdmin with docker-compose
+
+Instead of passing the above commands repeatedly, will package them into a single `YAML` file to create and start all relevant services. We'll build the file as [docker-compose.yaml](/2_DOCKER_SQL/docker-compose.yaml). We don't need to specify a network here, as they're being defined together.
+
+Once the yaml is finished, run `docker-compose up`, which will run the file. `docker-compose up -d` runs it in detached mode, which preserves the terminal.
+To kill it, run `docker-compose down`.
+
+# 1.2.6 SQL refresher
+
+Let's upload the zone-refresh data. We'll use a [jupyter notebook](/2_DOCKER_SQL/ingest_zones.ipynb) to do so.

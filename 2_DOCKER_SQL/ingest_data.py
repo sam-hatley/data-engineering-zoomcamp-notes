@@ -22,14 +22,15 @@ def main(params):
     df_iter = pd.read_csv(f'{csv_name}', iterator=True, chunksize=100_000)
     df = next(df_iter)
 
+    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
+    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
+
     # Create table
     df.head(n=0).to_sql(name=f'{table_name}', con=engine, if_exists='replace')
 
     # Import the first 100,000 rows
-    df.tpep_dropoff_datetime = pd.to_datetime(df.tpep_dropoff_datetime)
-    df.tpep_pickup_datetime = pd.to_datetime(df.tpep_pickup_datetime)
-
     df.to_sql(name='yellow_taxi_data', con=engine, if_exists='append')
+    print("inserted rows 0 - 100000")
 
     # Import the remaining rows
     n = 100_000
@@ -45,6 +46,7 @@ def main(params):
         n += 100_000
 
 if __name__ == '__main__':
+    # Define params to be passed to function through command-line args
     parser = argparse.ArgumentParser(description='Ingest CSV data to Postgres')
 
     parser.add_argument('--user', help='username for postgres')

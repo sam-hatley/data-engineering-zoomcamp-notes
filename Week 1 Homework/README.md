@@ -1,7 +1,8 @@
 # Week 1 Homework
 
-In this homework we'll prepare the environment 
-and practice with Docker and SQL
+In this homework we'll prepare the environment and practice with Docker and SQL.
+
+> I've provided my code largely in the codeboxes below. If I've used a separate file, I've enclosed it in a [link](readme.md).
 
 
 ## Question 1. Knowing docker tags
@@ -46,6 +47,8 @@ You will also need the dataset with zones:
 ```wget https://s3.amazonaws.com/nyc-tlc/misc/taxi+_zone_lookup.csv```
 
 Download this data and put it into Postgres (with jupyter notebooks or with a pipeline)
+
+[The jupyter notebook used in this portion of the assignment.](ingest.ipynb)
 
 
 ## Question 3. Count records 
@@ -106,7 +109,7 @@ We want the name of the zone, not the id.
 
 Note: it's not a typo, it's `tip` , not `trip`
 
-Doing this the hard way.
+Doing this the hard way
 
 ```bash
 sudo wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv

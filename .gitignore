@@ -1,0 +1,12 @@
+*.csv
+*/ny_taxi_postgres_data
+*/postgres
+*.json
+json:Zone.Identifier
+*.json:Zone.Identifier
+*.terraform.*
+*/.terraform
+*/terraform
+terraform.tfstate*
+*.gz
+*.tf

@@ -340,7 +340,7 @@ $ wget https://raw.githubusercontent.com/DataTalksClub/data-engineering-zoomcamp
 $ wget https://raw.githubusercontent.com/DataTalksClub/data-engineering-zoomcamp/main/week_1_basics_n_setup/1_terraform_gcp/terraform/variables.tf
 ```
 
-3. Create a json file with account credentials for later usage. You'll need to go to "Service Accounts", "Keys", and create a json key, which you can send over via the following:
+3. Create a json file with account credentials for later usage. You'll need to go to "Service Accounts", "Keys", and create a json key, which you can send over via the following (on your local machine):
 
 ```bash
 $ gcloud config set project $PROJECT_NAME

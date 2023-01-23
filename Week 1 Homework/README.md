@@ -171,3 +171,202 @@ That's a tough one.
 >```
 >
 >Paste the output of this command into the homework submission form.
+
+The output of the command is below:
+
+```bash
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # google_bigquery_dataset.dataset will be created
+  + resource "google_bigquery_dataset" "dataset" {
+      + creation_time              = (known after apply)
+      + dataset_id                 = "trips_data_all"
+      + delete_contents_on_destroy = false
+      + etag                       = (known after apply)
+      + id                         = (known after apply)
+      + labels                     = (known after apply)
+      + last_modified_time         = (known after apply)
+      + location                   = "europe-west6"
+      + project                    = "dezoomcamp-1"
+      + self_link                  = (known after apply)
+
+      + access {
+          + domain         = (known after apply)
+          + group_by_email = (known after apply)
+          + role           = (known after apply)
+          + special_group  = (known after apply)
+          + user_by_email  = (known after apply)
+
+          + dataset {
+              + target_types = (known after apply)
+
+              + dataset {
+                  + dataset_id = (known after apply)
+                  + project_id = (known after apply)
+                }
+            }
+
+          + routine {
+              + dataset_id = (known after apply)
+              + project_id = (known after apply)
+              + routine_id = (known after apply)
+            }
+
+          + view {
+              + dataset_id = (known after apply)
+              + project_id = (known after apply)
+              + table_id   = (known after apply)
+            }
+        }
+    }
+
+  # google_storage_bucket.data-lake-bucket will be created
+  + resource "google_storage_bucket" "data-lake-bucket" {
+      + force_destroy               = true
+      + id                          = (known after apply)
+      + location                    = "EUROPE-WEST6"
+      + name                        = "dtc_data_lake_dezoomcamp-1"
+      + project                     = (known after apply)
+      + public_access_prevention    = (known after apply)
+      + self_link                   = (known after apply)
+      + storage_class               = "STANDARD"
+      + uniform_bucket_level_access = true
+      + url                         = (known after apply)
+
+      + lifecycle_rule {
+          + action {
+              + type = "Delete"
+            }
+
+          + condition {
+              + age                   = 30
+              + matches_prefix        = []
+              + matches_storage_class = []
+              + matches_suffix        = []
+              + with_state            = (known after apply)
+            }
+        }
+
+      + versioning {
+          + enabled = true
+        }
+
+      + website {
+          + main_page_suffix = (known after apply)
+          + not_found_page   = (known after apply)
+        }
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+google_bigquery_dataset.dataset: Creating...
+google_storage_bucket.data-lake-bucket: Creating...
+google_bigquery_dataset.dataset: Creation complete after 1s [id=projects/dezoomcamp-1/datasets/trips_data_all]
+google_storage_bucket.data-lake-bucket: Creation complete after 2s [id=dtc_data_lake_dezoomcamp-1]
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+```
+
+To be fair, I'm unsure if this was the intended result, and perhaps you wanted the response if you only used the default permissions on the VM, which was:
+
+```bash
+google_bigquery_dataset.dataset: Creating...
+google_storage_bucket.data-lake-bucket: Creating...
+╷
+│ Error: googleapi: Error 403: Access denied., forbidden
+│
+│   with google_storage_bucket.data-lake-bucket,
+│   on main.tf line 19, in resource "google_storage_bucket" "data-lake-bucket":
+│   19: resource "google_storage_bucket" "data-lake-bucket" {
+│
+╵
+╷
+│ Error: Error creating Dataset: googleapi: Error 403: Request had insufficient authentication scopes.
+│ Details:
+│ [
+│   {
+│     "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+│     "domain": "googleapis.com",
+│     "metadata": {
+│       "method": "google.cloud.bigquery.v2.DatasetService.InsertDataset",
+│       "service": "bigquery.googleapis.com"
+│     },
+│     "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT"
+│   }
+│ ]
+│
+│ More details:
+│ Reason: insufficientPermissions, Message: Insufficient Permission
+│
+│
+│   with google_bigquery_dataset.dataset,
+│   on main.tf line 45, in resource "google_bigquery_dataset" "dataset":
+│   45: resource "google_bigquery_dataset" "dataset" {
+```
+
+As the form asks for code, I'll provide the steps taken here for reference.
+
+1. Install terraform as per [the instructions](https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/install-cli).
+
+```bash
+$ sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+$ wget -O- https://apt.releases.hashicorp.com/gpg | \
+    gpg --dearmor | \
+    sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
+$ gpg --no-default-keyring \
+    --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+    --fingerprint
+$ echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
+    https://apt.releases.hashicorp.com $(lsb_release -cs) main" | \
+    sudo tee /etc/apt/sources.list.d/hashicorp.list
+$ sudo apt update && sudo apt-get install terraform
+```
+
+2. Grab the files required from the [course repo](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main/week_1_basics_n_setup/1_terraform_gcp/terraform)
+
+```bash
+$ mkdir ~/terraform && cd ~/terraform
+$ wget https://raw.githubusercontent.com/DataTalksClub/data-engineering-zoomcamp/main/week_1_basics_n_setup/1_terraform_gcp/terraform/main.tf
+$ wget https://raw.githubusercontent.com/DataTalksClub/data-engineering-zoomcamp/main/week_1_basics_n_setup/1_terraform_gcp/terraform/variables.tf
+```
+
+3. Create a json file with account credentials for later usage. You'll need to go to "Service Accounts", "Keys", and create a json key, which you can send over via the following:
+
+```bash
+$ gcloud config set project $PROJECT_NAME
+$ gcloud compute scp $JSON_KEY $VM_NAME:$REMOTE_DIR --ssh-key-file ~/.ssh/$KEY_NAME
+```
+
+4. We'll set that json as a credential with the following:
+
+```bash
+echo $GOOGLE_APPLICATION_CREDENTIALS $PATH
+```
+
+And use those credentials to login to google with the appropriate permissions:
+
+```bash
+gcloud auth application-default login
+```
+
+5. Make it happen
+
+Run terraform to init, plan, validate, and apply. Destroy once you're finished with the resources:
+
+```bash
+$ terraform init
+$ terraform plan
+$ terraform validate
+$ terraform apply
+$ terraform destroy
+```

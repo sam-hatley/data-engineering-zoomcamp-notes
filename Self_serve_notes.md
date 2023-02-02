@@ -97,6 +97,8 @@ docker run -it \
 
 Once we've connected to `http://localhost:8080/` with the credentials admin@admin.com:root, we can connect using the name `pg-database`: **not** localhost.
 
+> FYI: just run `docker ps` and connect using the name given there.
+
 # Dockerizing the Ingestion script
 
 This includes turning the jupyter notebook into the [ingest_data.py](/2_DOCKER_SQL/ingest_data.py) program.

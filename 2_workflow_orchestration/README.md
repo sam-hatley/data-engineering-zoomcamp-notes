@@ -12,7 +12,7 @@
 447,770
 ```
 
-This just required a modification of [parameterized_flow.py](/parameterized_flow.py), which was already built off the top of `etl_web_to_gcs.py`. 
+This just required a modification of [parameterized_flow.py](parameterized_flow.py), which was already built off the top of `etl_web_to_gcs.py`. 
 
 The script can be modified to import green taxi data by accessing the "Deployments" tab in Prefect Orion, selecting the deployment ("Parameterized ETL", in this case), selecting "Parameters", and editing those to `months = 1, year = 2020, color = "green"`. However, while the yellow taxi data uses `tpep_pickup_datetime` and `tpep_dropoff_datetime`, the green taxi data uses `lpep_pickup_datetime` and `lpep_dropoff_datetime`, which broke the script setting those columns to datetime. Turning the first portion of the row into a variable fixes this issue, as in the below:
 

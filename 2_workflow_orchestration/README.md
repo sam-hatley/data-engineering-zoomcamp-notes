@@ -30,6 +30,12 @@ def clean(df: pd.DataFrame, color: str) -> pd.DataFrame:
     ...
 ```
 
+The relevant line in the output with the solution comes from the logs built into the program earlier:
+
+```
+10:51:26.900 | INFO    | Task run 'clean-2c6af9f6-0' - Before no passengers: 447770
+```
+
 ### 2. Scheduling with Cron
 
 >Cron is a common scheduling specification for workflows.

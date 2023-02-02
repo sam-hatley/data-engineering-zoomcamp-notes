@@ -9,4 +9,4 @@ json:Zone.Identifier
 */terraform
 terraform.tfstate*
 *.gz
-*.tf
+*.parquet

@@ -10,9 +10,24 @@
 
 ```
 447,770
-766,792
-299,234
-822,132
+```
+
+This just required a modification of [parameterized_flow.py](2_workflow_orchestration/parameterized_flow.py), which was already built off the top of `etl_web_to_gcs.py`. 
+
+The script can be modified to import green taxi data by accessing the "Deployments" tab in Prefect Orion, selecting the deployment ("Parameterized ETL", in this case), selecting "Parameters", and editing those to `months = 1, year = 2020, color = "green"`. However, while the yellow taxi data uses `tpep_pickup_datetime` and `tpep_dropoff_datetime`, the green taxi data uses `lpep_pickup_datetime` and `lpep_dropoff_datetime`, which broke the script setting those columns to datetime. Turning the first portion of the row into a variable fixes this issue, as in the below:
+
+```py
+@task(log_prints=True)
+def clean(df: pd.DataFrame, color: str) -> pd.DataFrame:
+    """Fix dtype issues"""
+    if color == "yellow":
+        dtstr = "tpep"
+    elif color == "green":
+        dtstr = "lpep"
+
+    df[f"{dtstr}_pickup_datetime"] = pd.to_datetime(df[f"{dtstr}_pickup_datetime"])
+    df[f"{dtstr}_dropoff_datetime"] = pd.to_datetime(df[f"{dtstr}_dropoff_datetime"])
+    ...
 ```
 
 ### 2. Scheduling with Cron

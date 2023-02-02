@@ -15,11 +15,15 @@ def fetch(dataset_url) -> pd.DataFrame:
 
 
 @task(log_prints=True)
-def clean(df: pd.DataFrame) -> pd.DataFrame:
+def clean(df: pd.DataFrame, color: str) -> pd.DataFrame:
     """Fix dtype issues"""
+    if color == "yellow":
+        dtstr = "tpep"
+    elif color == "green":
+        dtstr = "lpep"
 
-    df["tpep_pickup_datetime"] = pd.to_datetime(df["tpep_pickup_datetime"])
-    df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"])
+    df[f"{dtstr}_pickup_datetime"] = pd.to_datetime(df[f"{dtstr}_pickup_datetime"])
+    df[f"{dtstr}_dropoff_datetime"] = pd.to_datetime(df[f"{dtstr}_dropoff_datetime"])
     print(df.head(2))
     print(f"columns: {df.dtypes}")
     print(f"Before no passengers: {len(df)}")
@@ -60,9 +64,8 @@ def etl_web_to_gcs(color: str, year: int, month: int) -> None:
     dataset_file = f"{color}_tripdata_{year}-{month:02}"
     dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
 
-    print(dataset_url)
     df_raw = fetch(dataset_url)
-    df_clean = clean(df_raw)
+    df_clean = clean(df_raw, color)
     path = write_local(df_clean, color, dataset_file)
     write_gsc(path, color, dataset_file)
 
@@ -80,3 +83,4 @@ if __name__ == "__main__":
 
 
 # prefect deployment build ./parameterized_flow.py:etl_parent_flow -n "Parameterized ETL"
+# prefect deployment apply etl_parent_flow-deployment.yaml

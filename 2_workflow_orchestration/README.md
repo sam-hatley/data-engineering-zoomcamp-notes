@@ -64,9 +64,29 @@ E.g., cron specifies minute, hour, day, month, and day-of-week: the above signif
 
 ```
 14,851,920
-12,282,990
-27,235,753
-11,338,483
+```
+
+Not much was needed to change the [original file](etl_gcs_to_bq.py): ultimately, I needed to remove the `transform` function from the main flow, use a for-loop to manage multiple months, load the df within the main flow, and count/report the rows processed. The code required looks like this (the full file is [here](homework/etl_gcs_to_bq.py).):
+
+```py
+@flow(log_prints=True)
+def etl_gcs_to_bq(color: str = "yellow", year: int = 2019, months: list = [2, 3]) -> None:
+    """Main ETL flow to load data into BigQuery"""
+
+    row_count = 0
+    for month in months:
+        path = extract_from_gcs(color, year, month)
+        df = pd.read_parquet(path)
+        write_bq(df)
+        row_count += len(df)
+    
+    print(f"{row_count} rows processed.")
+```
+
+From which the relevant output was:
+
+```
+14:35:23.510 | INFO    | Flow run 'literate-angelfish' - 14851920 rows processed.
 ```
 
 ### 4. Github Storage Block
@@ -119,10 +139,9 @@ E.g., cron specifies minute, hour, day, month, and day-of-week: the above signif
 >Prefect Secret blocks provide secure, encrypted storage in the database and obfuscation in the UI. Create a secret block in the UI that stores a fake 10-digit password to connect to a third-party service. Once you’ve created your block in the UI, how many characters are shown as asterisks (*) on the next page of the UI?
 
 ```
-5
-6
 8
-10
 ```
+
+This feels superfluous.
 
 https://forms.gle/PY8mBEGXJ1RvmTM97

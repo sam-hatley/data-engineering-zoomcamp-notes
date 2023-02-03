@@ -2,7 +2,7 @@
 
 Using anaconda, useful concepts:
 
-- Creating an env: `conda create -n {env name}python=3.9`
+- Creating an env: `conda create -n {env name} python=3.9`
 - Using the env: `conda activate {env name}`
 - Going back to base: `conda deactivate`
 

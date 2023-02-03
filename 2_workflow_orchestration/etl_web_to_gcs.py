@@ -18,12 +18,13 @@ def clean(df: pd.DataFrame) -> pd.DataFrame:
 
     df["tpep_pickup_datetime"] = pd.to_datetime(df["tpep_pickup_datetime"])
     df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"])
-    print(df.head(2))
-    print(f"columns: {df.dtypes}")
-    print(f"Before no passengers: {len(df)}")
+    
+    # print(df.head(2))
+    # print(f"columns: {df.dtypes}")
 
-    df = df[df["passenger_count"] != 0]
-    print(f"After no passengers: {len(df)}")
+    # print(f"Before no passengers: {len(df)}")
+    # df = df[df["passenger_count"] != 0]
+    # print(f"After no passengers: {len(df)}")
     return df
 
 
@@ -53,8 +54,8 @@ def etl_web_to_gcs() -> None:
     """Main ETL function"""
 
     color = "yellow"
-    year = 2021
-    month = 1
+    year = 2019
+    month = 2
     dataset_file = f"{color}_tripdata_{year}-{month:02}"
     dataset_url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{dataset_file}.csv.gz"
 

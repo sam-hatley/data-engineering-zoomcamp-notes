@@ -3,7 +3,7 @@
 ###
 name: etl_web_to_gcs
 description: Main ETL function
-version: 8fab2fb5b2fd9cf953b925f654860d5c
+version: a685b5568a32eae1085ac807b9e0f98f
 # The work queue that will handle this deployment's runs
 work_queue_name: default
 work_pool_name: null
@@ -34,7 +34,7 @@ storage:
   reference: null
   access_token: null
   include_git_objects: true
-  _block_document_id: 5127a178-6827-45de-aad6-652987a07f7f
+  _block_document_id: c6ec0f59-5b2d-452d-ab86-b7c1d1dd8c66
   _block_document_name: dezoomcamp-git
   _is_anonymous: false
   block_type_slug: github
@@ -47,4 +47,4 @@ parameter_openapi_schema:
   properties: {}
   required: null
   definitions: null
-timestamp: '2023-02-03T17:02:16.242742+00:00'
+timestamp: '2023-02-03T17:18:27.647341+00:00'

@@ -2,7 +2,6 @@ from pathlib import Path
 import pandas as pd
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
-from prefect.blocks.notifications import SlackWebhook
 
 
 @task(retries=3)
@@ -28,11 +27,9 @@ def clean(df: pd.DataFrame, color: str) -> pd.DataFrame:
     # print(df.head(2))
     # print(f"columns: {df.dtypes}")
 
-    slack_block = SlackWebhook.load("webhook")
-
-    slack_block.notify(f"Before no passengers: {len(df)}")
+    print(f"Before no passengers: {len(df)}")
     df = df[df["passenger_count"] != 0]
-    slack_block.notify(f"After no passengers: {len(df)}")
+    print(f"After no passengers: {len(df)}")
     return df
 
 

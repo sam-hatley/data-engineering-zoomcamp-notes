@@ -145,10 +145,24 @@ prefect deployment build 2_workflow_orchestration/homework/etl_web_to_gcs_hw.py:
 >How many rows were processed by the script?
 
 ```
-125,268
-377,922
-728,390
 514,392
+```
+
+Used the code above, adjusted for April 2019. The webhook in my case was not functional, so I ended up creating my own, which I later [added to the FAQ](https://docs.google.com/document/d/19bnYs80DwuUimHM65UV3sylsCn2j1vziPOwzBwQrebw/edit#bookmark=id.ktcwmlbqgnf0) on Jeff's request.
+
+The results were as below:
+```
+18:41:04.853 | INFO    | Task run 'clean-2c6af9f6-0' - Before no passengers: 514392
+```
+
+```
+Prefect flow run notification
+Flow run etl-web-to-gcs/voracious-pillbug entered state Completed at 2023-02-03T18:41:05.642088+00:00.
+Flow ID: 3c6dd44b-d74f-458b-ab1f-942680e2e350
+Flow run ID: 5d6b01fe-c006-4180-bca5-b59deedf73e1
+Flow run URL: https://app.prefect.cloud/account/b3d5a1f7-f6a0-49e5-9c17-236b8ca5b6bc/workspace/2a210f88-d107-4e69-9fda-6be6222151c5/flow-runs/flow-run/5d6b01fe-c006-4180-bca5-b59deedf73e1
+State message: All states completed.
+Prefect Notifications | Today at 6:41 PM
 ```
 
 ### 6. Secrets
@@ -159,6 +173,6 @@ prefect deployment build 2_workflow_orchestration/homework/etl_web_to_gcs_hw.py:
 8
 ```
 
-This feels superfluous.
+No code required.
 
 https://forms.gle/PY8mBEGXJ1RvmTM97

@@ -98,12 +98,29 @@ From which the relevant output was:
 >Run your deployment in a local subprocess (the default if you don’t specify an infrastructure). Use the Green taxi data for the month of November 2020.
 >
 >How many rows were processed by the script?
+
 ```
-88,019
-192,297
 88,605
-190,225
 ```
+
+This also required the same updates from [question 1](#1-load-january-2020-data) to process green taxi data. I was able to build the block using this particular folder of the repo with the below code:
+```py
+from prefect.filesystems import GitHub
+
+block = GitHub(
+    repository="https://github.com/sam-hatley/data-engineering-zoomcamp-notes.git"
+)
+block.get_directory("2_workflow_orchestration/homework")  # specify a subfolder of repo
+block.save("dezoomcamp-git")
+```
+
+This was then built with the command:
+```bash
+prefect deployment build 2_workflow_orchestration/homework/etl_web_to_gcs_hw.py:etl_web_to_gcs --name etl_web_to_gcs --tag dezoomcamp-git -sb github/dezoomcamp-git -a
+```
+
+...and run with `prefect run etl-web-to-gcs/etl-web-to-gcs`. The code was modified to skip out on actually uploading to GCS- it works just fine if you uncomment the last two lines in `etl_web_to_gcs()`. The file used was [etl_web_to_gcs_hw.py](homework/etl_web_to_gcs_hw.py).
+
 
 ### 5. Email or Slack notifications
 

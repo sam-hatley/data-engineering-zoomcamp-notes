@@ -1,7 +1,9 @@
+# This creates a docker block within a running Prefect server
+
 from prefect.infrastructure.docker import DockerContainer
 
 docker_block = DockerContainer(
-    image="hatleys/prefect:v01",
+    image="hatleys/prefect:v03",
     image_pull_policy="ALWAYS",
     auto_remove=True,
 )

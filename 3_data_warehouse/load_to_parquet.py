@@ -7,7 +7,7 @@ import os
 
 @task
 def extract_from_ghub(file: str) -> Path:
-    """download tripdata from github"""
+    """download tripdata from github and convert to parquet"""
 
     df = pd.read_csv(
         f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/{file}.csv.gz"
@@ -15,11 +15,6 @@ def extract_from_ghub(file: str) -> Path:
     local_path = f"./data/{file}.parquet"
     df.to_parquet(local_path, compression="gzip")
     return local_path
-
-
-@task
-def convert_to_parquet(file: str) -> Path:
-    pd
 
 
 @task(log_prints=True, retries=3)

@@ -6,7 +6,7 @@ import os
 
 @task
 def extract_from_ghub(file: str) -> Path:
-    """download tripdata from github and convert to parquet"""
+    """download tripdata from github"""
 
     os.system(
         f"wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/{file} -O ./data/{file}"
@@ -31,7 +31,7 @@ def flow():
                 break
             file = f"fhv_tripdata_{year}-{month:02}.csv.gz"
             local_path = extract_from_ghub(file)
-            #upload_data(local_path, file)
+            # upload_data(local_path, file)
 
 
 if __name__ == "__main__":

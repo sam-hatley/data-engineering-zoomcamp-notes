@@ -106,6 +106,8 @@ Not in cases where tables are < 1GB, as per the lesson.
 
 
 >Note: Column types for all files used in an External Table must have the same datatype. While an External Table may be created and shown in the side panel in Big Query, this will need to be validated by running a count query on the External Table to check if any errors occur. 
+
+I honestly would've preferred this from the start. [Pipeline only lightly tested.](load_to_parquet.py)
  
 ## Submitting the solutions
 

@@ -1,18 +1,25 @@
 from pathlib import Path
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
+import pandas as pd
 import os
 
 
 @task
 def extract_from_ghub(file: str) -> Path:
-    """download tripdata from github and convert to parquet"""
+    """download tripdata from github"""
 
-    os.system(
-        f"wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/{file} -O ./data/{file}"
+    df = pd.read_csv(
+        f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/{file}.csv.gz"
     )
-    local_path = f"./data/{file}"
+    local_path = f"./data/{file}.parquet"
+    df.to_parquet(local_path, compression="gzip")
     return local_path
+
+
+@task
+def convert_to_parquet(file: str) -> Path:
+    pd
 
 
 @task(log_prints=True, retries=3)
@@ -29,9 +36,9 @@ def flow():
         for month in range(1, 13):
             if year == 2021 and month > 7:
                 break
-            file = f"fhv_tripdata_{year}-{month:02}.csv.gz"
+            file = f"fhv_tripdata_{year}-{month:02}"
             local_path = extract_from_ghub(file)
-            #upload_data(local_path, file)
+            upload_data(local_path, file)
 
 
 if __name__ == "__main__":

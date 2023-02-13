@@ -4,7 +4,7 @@ from prefect_gcp.cloud_storage import GcsBucket
 import os
 
 
-@task
+@task(log_prints=True, retries=3)
 def extract_from_ghub(file: str) -> Path:
     """download tripdata from github"""
 

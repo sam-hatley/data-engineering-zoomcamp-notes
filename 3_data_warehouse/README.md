@@ -83,7 +83,7 @@ CLUSTER BY Affiliated_base_number AS
   SELECT * FROM dezoomcamp-1.dezoomcamp.materialzed_tripdata;
 
 SELECT DISTINCT Affiliated_base_number
-FROM dezoomcamp-1.dezoomcamp.materialzed_tripdata_partitioned
+FROM dezoomcamp-1.dezoomcamp.materialzed_tripdata --and "_partitioned" in a second query
 WHERE pickup_datetime >= "2019-03-01"
     AND pickup_datetime <= "2019-03-31";
 ```

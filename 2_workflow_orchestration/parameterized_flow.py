@@ -37,7 +37,7 @@ def write_local(df: pd.DataFrame, color: str, dataset_file: str) -> Path:
     """Write DF out as local parquet"""
 
     path = Path(
-        f"/home/sam/git/data-engineering-zoomcamp-notes/2_workflow_orchestration/data/{dataset_file}.parquet"
+        f"./data/{dataset_file}.parquet"
     )
     df.to_parquet(path, compression="gzip")
     return path
@@ -71,7 +71,7 @@ def etl_web_to_gcs(color: str, year: int, month: int) -> None:
 
 @flow()
 def etl_parent_flow(
-    months: list[int] = [1, 2, 3], year: int = 2021, color: str = "yellow"
+    months: list[int] = [i for i in range(1, 13)], year: int = 2021, color: str = "yellow"
 ) -> None:
     for month in months:
         etl_web_to_gcs(color, year, month)

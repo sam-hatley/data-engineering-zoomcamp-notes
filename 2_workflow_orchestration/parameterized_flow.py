@@ -24,12 +24,11 @@ def clean(df: pd.DataFrame, color: str) -> pd.DataFrame:
 
     df[f"{dtstr}_pickup_datetime"] = pd.to_datetime(df[f"{dtstr}_pickup_datetime"])
     df[f"{dtstr}_dropoff_datetime"] = pd.to_datetime(df[f"{dtstr}_dropoff_datetime"])
-    print(df.head(2))
-    print(f"columns: {df.dtypes}")
-    print(f"Before no passengers: {len(df)}")
-
-    df = df[df["passenger_count"] != 0]
-    print(f"After no passengers: {len(df)}")
+    # print(df.head(2))
+    # print(f"columns: {df.dtypes}")
+    # print(f"Before no passengers: {len(df)}")
+    # df = df[df["passenger_count"] != 0]
+    # print(f"After no passengers: {len(df)}")
     return df
 
 

@@ -1,0 +1,58 @@
+###
+### A complete description of a Prefect Deployment for flow 'main'
+###
+name: Colored taxi data to GCP Parquet
+description: null
+version: 1f2e375cf5067fababcb68028de46086
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: null
+tags: []
+parameters: {}
+schedule: null
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: main
+manifest_path: null
+storage: null
+path: /home/sam/git/data-engineering-zoomcamp-notes/4_analytics_engineering
+entrypoint: load_to_bucket_parquet.py:main
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    colors:
+      title: colors
+      position: 0
+      type: array
+      items: {}
+    years:
+      title: years
+      position: 1
+      type: array
+      items: {}
+    months:
+      title: months
+      position: 2
+      type: array
+      items: {}
+  required:
+  - colors
+  - years
+  - months
+  definitions: null
+timestamp: '2023-02-14T10:15:47.395703+00:00'

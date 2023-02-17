@@ -1,3 +1,5 @@
+Copied from [DataTalksClub/data-engineering-zoomcamp/week_4_analytics_engineering/dbt_cloud_setup.md](https://github.com/DataTalksClub/data-engineering-zoomcamp/blob/main/week_4_analytics_engineering/dbt_cloud_setup.md
+)
 # How to setup dbt cloud with bigquery
 [Official documentation](https://docs.getdbt.com/tutorial/setting-up)
 

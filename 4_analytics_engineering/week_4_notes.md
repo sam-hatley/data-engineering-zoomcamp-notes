@@ -114,3 +114,6 @@ Will take data from the source, import as raw data, and use dbt to transform dat
 
 # 4.2.1 - Start Your dbt Project: BigQuery and dbt Cloud (Alternative A)
 
+The taxi data are represented at the below links from 2019-01 - 2021-07:
+https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2019-01.csv.gz
+https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-01.csv.gz

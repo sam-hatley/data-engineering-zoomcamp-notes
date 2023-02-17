@@ -22,7 +22,7 @@ def upload_data(local_path: str, file: str) -> None:
     """Uploads local data to GCP"""
 
     gcs_block = GcsBucket.load("dezoomcamp1")
-    gcs_block.upload_from_path(from_path=local_path, to_path=f"fhv/{file}")
+    gcs_block.upload_from_path(from_path=local_path, to_path=f"fhv/{file}.parquet")
     return
 
 

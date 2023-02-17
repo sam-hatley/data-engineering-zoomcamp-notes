@@ -9,6 +9,7 @@ import os.path
 # https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-01.csv.gz
 # 2019-07 through 11 have dtype issues
 
+
 @task(log_prints=True, retries=3)
 def extract_from_ghub(color: str, file: str) -> pd.DataFrame:
     """download tripdata from github and convert to parquet"""
@@ -31,12 +32,7 @@ def clean(df: pd.DataFrame, color: str, file: str) -> Path:
     df[f"{dtstr}_pickup_datetime"] = pd.to_datetime(df[f"{dtstr}_pickup_datetime"])
     df[f"{dtstr}_dropoff_datetime"] = pd.to_datetime(df[f"{dtstr}_dropoff_datetime"])
 
-    df["tpep_pickup_datetime"] = pd.to_datetime(df["tpep_pickup_datetime"])
-    df["tpep_dropoff_datetime"] = pd.to_datetime(df["tpep_dropoff_datetime"])
-
-    df = df[df["passenger_count"] != 0]
-
-    local_path = f"./data/{file}.parquet"
+    local_path = f"/tmp/{file}.parquet"
     df.to_parquet(local_path, compression="gzip")
     return local_path
 
@@ -54,8 +50,8 @@ def upload_data(local_path: str, file: str, color: str) -> None:
 def main(colors: list, years: list, months: list) -> None:
     for color in colors:
         for year in years:
-            if year == 2021:
-                months = [i for i in range(1, 7)]
+            if year == 2021 and months == [month for month in range(1, 13)]:
+                months = [month for month in range(1, 8)]
             for month in months:
                 file = f"{color}_tripdata_{year}-{month:02}"
                 print(f"Processing {file}")

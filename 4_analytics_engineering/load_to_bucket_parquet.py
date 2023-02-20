@@ -32,6 +32,29 @@ def clean(df: pd.DataFrame, color: str, file: str) -> Path:
     df[f"{dtstr}_pickup_datetime"] = pd.to_datetime(df[f"{dtstr}_pickup_datetime"])
     df[f"{dtstr}_dropoff_datetime"] = pd.to_datetime(df[f"{dtstr}_dropoff_datetime"])
 
+    df = df.astype(
+        {
+            "VendorID": "Int64",
+            f"{dtstr}_pickup_datetime": "datetime64",
+            f"{dtstr}_dropoff_datetime": "datetime64",
+            "passenger_count": "Int64",
+            "trip_distance": "float64",
+            "RatecodeID": "Int64",
+            "store_and_fwd_flag": "object",
+            "PULocationID": "Int64",
+            "DOLocationID": "Int64",
+            "payment_type": "Int64",
+            "fare_amount": "float64",
+            "extra": "float64",
+            "mta_tax": "float64",
+            "tip_amount": "float64",
+            "tolls_amount": "float64",
+            "improvement_surcharge": "float64",
+            "total_amount": "float64",
+            "congestion_surcharge": "float64",
+        }
+    )
+
     local_path = f"/tmp/{file}.parquet"
     df.to_parquet(local_path, compression="gzip")
     return local_path
@@ -61,7 +84,7 @@ def main(colors: list, years: list, months: list) -> None:
 
 
 if __name__ == "__main__":
-    colors = ["yellow", "green"]
+    colors = ["green"]
     years = [2019, 2020, 2021]
     months = [month for month in range(1, 13)]
 

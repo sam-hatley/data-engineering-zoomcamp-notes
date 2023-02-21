@@ -16,10 +16,9 @@ import os.path
 def extract_from_ghub(color: str, file: str) -> pd.DataFrame:
     """download tripdata from github and convert to parquet"""
 
-    df = pd.read_csv(
-        f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{file}.csv.gz",
-        engine=pyarrow,
-    )
+    url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{file}.csv.gz"
+
+    df = pd.read_csv(url, engine="pyarrow")
     return df
 
 
@@ -33,7 +32,7 @@ def clean(df: pd.DataFrame, color: str, file: str) -> Path:
     df = df.astype(schema)
 
     local_path = f"/tmp/{file}.parquet"
-    df.to_parquet(local_path, compression="gzip", engine=pyarrow)
+    df.to_parquet(local_path, compression="gzip", engine="pyarrow")
     return local_path
 
 

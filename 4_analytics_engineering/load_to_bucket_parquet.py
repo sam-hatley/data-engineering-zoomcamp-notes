@@ -16,7 +16,7 @@ def extract_from_ghub(color: str, file: str) -> pd.DataFrame:
     try:
         df = pd.read_parquet(local_path)
     except FileNotFoundError:
-        print(f"Local file {file} not found in {local_path}. Downloading from GitHub.")
+        print(f"Local file {local_path} not found. Downloading from GitHub.")
         df = pd.read_csv(url, engine="pyarrow")
 
     return df

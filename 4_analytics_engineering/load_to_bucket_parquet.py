@@ -20,13 +20,13 @@ def extract_from_ghub(color: str, file: str, local_external: str) -> pd.DataFram
 
     if local_external == "external":
         df = pd.read_csv(url, engine="pyarrow")
-        return df
     elif local_external == "local":
         try:
             df = pd.read_parquet(local_path)
         except FileNotFoundError:
             df = pd.read_csv(url, engine="pyarrow")
-        return df
+
+    return df
 
 
 @task(log_prints=True)

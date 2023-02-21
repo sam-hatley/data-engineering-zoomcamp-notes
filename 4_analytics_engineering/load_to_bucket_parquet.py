@@ -2,6 +2,7 @@ from pathlib import Path
 from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
 import pandas as pd
+from yaml import safe_load
 import os.path
 
 # Example URIs
@@ -24,36 +25,10 @@ def extract_from_ghub(color: str, file: str) -> pd.DataFrame:
 def clean(df: pd.DataFrame, color: str, file: str) -> Path:
     """Fix dtype issues and save as parquet"""
 
-    if color == "yellow":
-        dtstr = "tpep"
-    elif color == "green":
-        dtstr = "lpep"
+    with open("./dtypes.yaml", "rb") as f:
+        schema = safe_load(f)[color]
 
-    df[f"{dtstr}_pickup_datetime"] = pd.to_datetime(df[f"{dtstr}_pickup_datetime"])
-    df[f"{dtstr}_dropoff_datetime"] = pd.to_datetime(df[f"{dtstr}_dropoff_datetime"])
-
-    df = df.astype(
-        {
-            "VendorID": "Int64",
-            f"{dtstr}_pickup_datetime": "datetime64",
-            f"{dtstr}_dropoff_datetime": "datetime64",
-            "passenger_count": "Int64",
-            "trip_distance": "float64",
-            "RatecodeID": "Int64",
-            "store_and_fwd_flag": "object",
-            "PULocationID": "Int64",
-            "DOLocationID": "Int64",
-            "payment_type": "Int64",
-            "fare_amount": "float64",
-            "extra": "float64",
-            "mta_tax": "float64",
-            "tip_amount": "float64",
-            "tolls_amount": "float64",
-            "improvement_surcharge": "float64",
-            "total_amount": "float64",
-            "congestion_surcharge": "float64",
-        }
-    )
+    df = df.astype(schema)
 
     local_path = f"/tmp/{file}.parquet"
     df.to_parquet(local_path, compression="gzip")
@@ -84,7 +59,7 @@ def main(colors: list, years: list, months: list) -> None:
 
 
 if __name__ == "__main__":
-    colors = ["green"]
+    colors = ["yellow", "green"]
     years = [2019, 2020, 2021]
     months = [month for month in range(1, 13)]
 

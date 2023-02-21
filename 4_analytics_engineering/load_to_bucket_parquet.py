@@ -13,13 +13,20 @@ import os.path
 
 
 @task(log_prints=True, retries=3)
-def extract_from_ghub(color: str, file: str) -> pd.DataFrame:
+def extract_from_ghub(color: str, file: str, local_external: str) -> pd.DataFrame:
     """download tripdata from github and convert to parquet"""
-
     url = f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{file}.csv.gz"
+    local_path = f"/tmp/{file}.parquet"
 
-    df = pd.read_csv(url, engine="pyarrow")
-    return df
+    if local_external == "external":
+        df = pd.read_csv(url, engine="pyarrow")
+        return df
+    elif local_external == "local":
+        try:
+            df = pd.read_parquet(local_path)
+        except:
+            df = pd.read_csv(url, engine="pyarrow")
+        return df
 
 
 @task(log_prints=True)
@@ -46,7 +53,7 @@ def upload_data(local_path: str, file: str, color: str) -> None:
 
 
 @flow(log_prints=True)
-def main(colors: list, years: list, months: list) -> None:
+def main(colors: list, years: list, months: list, local_external: str) -> None:
     for color in colors:
         for year in years:
             if year == 2021 and months == [month for month in range(1, 13)]:
@@ -54,7 +61,7 @@ def main(colors: list, years: list, months: list) -> None:
             for month in months:
                 file = f"{color}_tripdata_{year}-{month:02}"
                 print(f"Processing {file}")
-                df = extract_from_ghub(color, file)
+                df = extract_from_ghub(color, file, local_external)
                 local_path = clean(df, color, file)
                 upload_data(local_path, file, color)
 
@@ -63,5 +70,6 @@ if __name__ == "__main__":
     colors = ["yellow", "green"]
     years = [2019, 2020, 2021]
     months = [month for month in range(1, 13)]
+    local_external = "local"
 
-    main(colors, years, months)
+    main(colors, years, months, local_external)

@@ -3,6 +3,7 @@ from prefect import flow, task
 from prefect_gcp.cloud_storage import GcsBucket
 import pandas as pd
 from yaml import safe_load
+import pyarrow
 import os.path
 
 # Example URIs
@@ -16,7 +17,8 @@ def extract_from_ghub(color: str, file: str) -> pd.DataFrame:
     """download tripdata from github and convert to parquet"""
 
     df = pd.read_csv(
-        f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{file}.csv.gz"
+        f"https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{color}/{file}.csv.gz",
+        engine=pyarrow,
     )
     return df
 
@@ -31,7 +33,7 @@ def clean(df: pd.DataFrame, color: str, file: str) -> Path:
     df = df.astype(schema)
 
     local_path = f"/tmp/{file}.parquet"
-    df.to_parquet(local_path, compression="gzip")
+    df.to_parquet(local_path, compression="gzip", engine=pyarrow)
     return local_path
 
 

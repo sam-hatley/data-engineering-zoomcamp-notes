@@ -24,7 +24,7 @@ def extract_from_ghub(color: str, file: str, local_external: str) -> pd.DataFram
     elif local_external == "local":
         try:
             df = pd.read_parquet(local_path)
-        except:
+        except FileNotFoundError:
             df = pd.read_csv(url, engine="pyarrow")
         return df
 

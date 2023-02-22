@@ -9,9 +9,9 @@ def extract_from_ghub(file: str) -> Path:
     """download tripdata from github"""
 
     os.system(
-        f"wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/{file} -O ./data/{file}"
+        f"wget https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhv/{file} -O /tmp/{file}"
     )
-    local_path = f"./data/{file}"
+    local_path = f"/tmp/{file}"
     return local_path
 
 

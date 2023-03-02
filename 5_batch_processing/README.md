@@ -6,6 +6,10 @@ Notes from home stopped at 5.2.1, I think.
 
 Most notes available for this in [init.ipynb](init.ipynb)
 
+## 5.3.2 - Spark DataFrames
+
+Most notes available for this in [init.ipynb](init.ipynb)
+
 # Week 5 Homework
 
 >For this homework we will be using the FHVHV 2021-06 data found here. [FHVHV Data](https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhvhv/fhvhv_tripdata_2021-06.csv.gz )

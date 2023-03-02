@@ -10,6 +10,27 @@ Most notes available for this in [init.ipynb](init.ipynb)
 
 Most notes available for this in [init.ipynb](init.ipynb)
 
+## 5.3.3 - (Optional) Preparing Yellow and Green Taxi Data
+
+Simple [bash script](prep/dl.sh) to dl data:
+
+```sh
+TAXI_TYPE=$1 # "yellow"
+YEAR=$2 # 2020
+
+URL_PREFIX="https://github.com/DataTalksClub/nyc-tlc-data/releases/download"
+
+for MONTH in {1..12}; do
+    FMONTH=`printf "%02d" ${MONTH}`
+    LOCAL_PREFIX="../data/raw/${TAXI_TYPE}/${YEAR}"
+    URL="${URL_PREFIX}/${TAXI_TYPE}/${TAXI_TYPE}_tripdata_${YEAR}-${FMONTH}.csv.gz"
+    mkdir -p ${LOCAL_PREFIX}
+    wget ${URL} -O ${LOCAL_PREFIX}/${TAXI_TYPE}_tripdata_${YEAR}-${FMONTH}.csv.gz
+done
+```
+
+Further notes in [taxi_schema.ipynb](prep/taxi_schema.ipynb)
+
 # Week 5 Homework
 
 >For this homework we will be using the FHVHV 2021-06 data found here. [FHVHV Data](https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhvhv/fhvhv_tripdata_2021-06.csv.gz )

@@ -31,6 +31,11 @@ done
 
 Further notes in [taxi_schema.ipynb](prep/taxi_schema.ipynb)
 
+
+## 5.4.1 - Anatomy of a Spark Cluster
+
+Notes in [06_spark_sql.ipynb](06_spark_sql.ipynb)
+
 # Week 5 Homework
 
 >For this homework we will be using the FHVHV 2021-06 data found here. [FHVHV Data](https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhvhv/fhvhv_tripdata_2021-06.csv.gz )

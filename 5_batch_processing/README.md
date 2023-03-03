@@ -62,6 +62,34 @@ Hadoop/HDFS allows us to store the files directly on executors with some redunda
 
 Notes in [07_groupby_join.ipynb](07_groupby_join.ipynb).
 
+### 5.4.3 - Joins in Spark
+
+Notes in [07_groupby_join.ipynb](07_groupby_join.ipynb).
+
+### 5.5.1 - (Optional) Operations on Spark Resilient Distributed Datasets (RDDs)
+
+[Come back to this later](https://www.youtube.com/watch?v=Bdu-xIrF3OM&list=PL3MmuxUbc_hJed7dXYoJw8DoCuVHhGEQb&index=52)
+
+### 5.5.2 - (Optional) Spark RDD mapPartition
+
+Come back to this later
+
+### 5.6.1 - Connecting to Google Cloud Storage
+
+[See 5.6.1_GCS.ipynb](5.6.1_GCS.ipynb)
+
+### 5.6.2 - Creating a Local Spark Cluster
+
+
+
+#### Joining two large tables
+
+#### Merge sort join
+
+#### Joining one large and one small table
+
+#### Broadcasting
+
 # Week 5 Homework
 
 >For this homework we will be using the FHVHV 2021-06 data found here. [FHVHV Data](https://github.com/DataTalksClub/nyc-tlc-data/releases/download/fhvhv/fhvhv_tripdata_2021-06.csv.gz )

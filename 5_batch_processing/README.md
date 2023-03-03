@@ -2,15 +2,17 @@
 
 Notes from home stopped at 5.2.1, I think.
 
-## 5.3.1 - First Look at Spark/PySpark
+## 5.2 Spark SQL and DataFrames
+
+### 5.3.1 - First Look at Spark/PySpark
 
 Most notes available for this in [init.ipynb](init.ipynb)
 
-## 5.3.2 - Spark DataFrames
+### 5.3.2 - Spark DataFrames
 
 Most notes available for this in [init.ipynb](init.ipynb)
 
-## 5.3.3 - (Optional) Preparing Yellow and Green Taxi Data
+### 5.3.3 - (Optional) Preparing Yellow and Green Taxi Data
 
 Simple [bash script](prep/dl.sh) to dl data:
 
@@ -29,12 +31,36 @@ for MONTH in {1..12}; do
 done
 ```
 
-Further notes in [taxi_schema.ipynb](prep/taxi_schema.ipynb)
+Further notes in [taxi_schema.ipynb](prep/taxi_schema.ipynb).
 
 
-## 5.4.1 - Anatomy of a Spark Cluster
+### 5.3.4 - SQL with Spark
 
-Notes in [06_spark_sql.ipynb](06_spark_sql.ipynb)
+Notes in [06_spark_sql.ipynb](06_spark_sql.ipynb).
+
+## 5.4 Spark Internals
+
+### 5.4.1 - Anatomy of a Spark Cluster
+
+#### Spark Cluster
+
+**Local Cluster** - everything on the same computer, as in the cases above:
+```py
+spark = SparkSession.builder \
+    .master("local[*]") \
+    ...
+```
+The code above specifying that this is a local build with the `.master("local[*]")` command: we're creating a local cluster
+
+**Cluster** - Has a master with a web UI on port 4040 which commands several executors, which handle jobs given by the master. Master should be running continually, executors can drop out.
+
+When processing a partitioned dataframe, executors will process the files one by one from the data lake in S3/GCS.
+
+Hadoop/HDFS allows us to store the files directly on executors with some redundancy: instead of downloading data to a machine, you just download the code to process data locally. The concept is called *data locality*. This is less popular today, as most cloud solutions are within the same data center- download speeds are relatively low, and the additional complexity from Hadoop/HDFS only provides a marginal speed improvement.
+
+### 5.4.2 - GroupBy in Spark
+
+Notes in [07_groupby_join.ipynb](07_groupby_join.ipynb).
 
 # Week 5 Homework
 

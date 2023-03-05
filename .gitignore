@@ -10,3 +10,5 @@ json:Zone.Identifier
 terraform.tfstate*
 *.gz
 *.parquet
+*.crc
+_SUCCESS

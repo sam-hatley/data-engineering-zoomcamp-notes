@@ -14,7 +14,7 @@ then
 else
 	EXEC_MEM=$2
 fi
-spark-submit --master spark://localhost:7077 --num-executors 2 \
+spark-submit --master spark://0.0.0.0:7077 --num-executors 2 \
 	         --executor-memory $EXEC_MEM --executor-cores 1 \
              --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.3.1,org.apache.spark:spark-avro_2.12:3.3.1,org.apache.spark:spark-streaming-kafka-0-10_2.12:3.3.1 \
              $PYTHON_JOB

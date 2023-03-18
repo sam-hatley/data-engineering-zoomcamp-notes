@@ -10,3 +10,5 @@ json:Zone.Identifier
 terraform.tfstate*
 *.gz
 *.parquet
+*/data
+*/checkpoint/*

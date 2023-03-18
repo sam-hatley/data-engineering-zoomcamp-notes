@@ -38,7 +38,7 @@ with open(path, "r") as f:
 ...
 ```
 
-The [streaming program](streaming.py) utilises the memory sink as written below to group POlocationIDs and order by usgage:
+The [streaming program](streaming.py) reworks the `op_groupby()` function as written below to group POlocationIDs and order by usgage:
 
 ```py
 def op_groupby(df, column_names):

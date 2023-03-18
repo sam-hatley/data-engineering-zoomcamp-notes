@@ -12,3 +12,5 @@ terraform.tfstate*
 *.parquet
 */data
 */checkpoint/*
+*.crc
+_SUCCESS

@@ -98,7 +98,6 @@ def op_windowed_groupby(df, window_duration, slide_duration):
 
 if __name__ == "__main__":
     spark = SparkSession.builder.appName("PULocations").getOrCreate()
-
     spark.sparkContext.setLogLevel("WARN")
 
     # read_streaming data

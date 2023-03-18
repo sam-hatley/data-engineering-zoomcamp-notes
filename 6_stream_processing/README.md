@@ -27,4 +27,13 @@ Tutorial steps
 
 This is where it gets interesting.
 
-Using java-
+Using java- nope.
+
+## 13 1 kafka stream python 1 (wut)
+
+Stopped at 13:35
+
+
+```
+236 Ride: {'vendor_id': '1', 'tpep_pickup_datetime': (datetime.datetime(2020, 7, 1, 1, 55, 54),), 'tpep_dropoff_datetime': (datetime.datetime(2020, 7, 1, 2, 5, 23),), 'passenger_count': 1, 'trip_distance': Decimal('3.20'), 'rate_code_id': 1, 'store_and_fwd_flag': 'N', 'pu_location_id': 236, 'do_location_id': 230, 'payment_type': '2', 'fare_amount': Decimal('11.5'), 'extra': Decimal('3'), 'mta_tax': Decimal('0.5'), 'tip_amount': Decimal('0'), 'tolls_amount': Decimal('0'), 'improvement_surcharge': Decimal('0.3'), 'total_amount': Decimal('15.3'), 'congestion_surcharge': Decimal('2.5')}
+```
